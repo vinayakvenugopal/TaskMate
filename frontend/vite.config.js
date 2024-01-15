@@ -8,7 +8,7 @@ export default defineConfig({
     port:2001,
     proxy:{
       '/api':{
-        target:'task-mate-self.vercel.app',
+        target:'http://localhost:2000',
         changeOrigin:true,
       }
     }
