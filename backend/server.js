@@ -26,9 +26,8 @@ app.use('/api/admin',adminRoute)
 
  
 
-const enviornment = 'production'
 
-if ( enviornment === 'production') {
+if ( process.env.NODE_ENV === 'production') {
     const __dirname = path.resolve();
     app.use(express.static(path.join(__dirname, '/frontend/dist')));
   
