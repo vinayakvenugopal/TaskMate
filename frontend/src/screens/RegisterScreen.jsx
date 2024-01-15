@@ -41,6 +41,10 @@ export const RegisterScreen = () => {
       toast.error('Name is not valid')
       return
     }
+    if(name.length<=3){
+      toast.error('Name is not valid')
+      return
+    }
     if(!emailRegex.test(email)){
       toast.error("Email Not Valid")
       return

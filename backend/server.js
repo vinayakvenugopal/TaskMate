@@ -7,7 +7,7 @@ import connectDB from './config/db.js'
 dotenv.config()
 import cookieParser from 'cookie-parser'
 
-const port = process.env.PORT||5000 
+const port = process.env.PORT||5000
 connectDB();
 const app = express()
 app.use(express.json())
