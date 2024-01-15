@@ -4,16 +4,15 @@ import userRoutes from './routes/userRoute.js'
 import adminRoute from './routes/adminRoute.js'
 import { notFound,errorHandler } from './middleware/errorMiddleware.js'
 import connectDB from './config/db.js'
-dotenv.config()
+import path from 'path'
+dotenv.config() 
 import cookieParser from 'cookie-parser'
-import cors from 'cors'
 const port = process.env.PORT||5000
+const currentWorkingDir = path.resolve();
+const parentDir = path.dirname(currentWorkingDir);
 connectDB();
 const app = express()
-app.use(cors({ 
-    origin: 'task-mate-self.vercel.app',
-    credentials: true
-  }));
+
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 app.use(cookieParser())
@@ -25,7 +24,23 @@ app.use(express.static('backend/Public'));
 app.use('/api/users',userRoutes)
 app.use('/api/admin',adminRoute)
 
-app.get('/',(req,res)=>res.send('Server started'))
+ 
+
+const enviornment = 'production'
+
+if ( enviornment === 'production') {
+    const __dirname = path.resolve();
+    app.use(express.static(path.join(__dirname, '/frontend/dist')));
+  
+    app.get('*', (req, res) =>
+      res.sendFile(path.resolve(__dirname, 'frontend', 'dist', 'index.html'))
+    );
+  } else {
+    app.get('/', (req, res) => {  
+      res.send('API is running....');
+    });
+  }
+
 
 app.use(notFound)      
 app.use(errorHandler)
